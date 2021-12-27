@@ -11,11 +11,16 @@ module.exports = {
 
     // TODO: userInfo 결과 존재 여부에 따라 응답을 구현하세요.
     // 결과가 존재하는 경우 세션 객체에 userId가 저장되어야 합니다.
-    if (!result) {
+    if (!userInfo) {
       // your code here
+      res.status(400).send({data:null, message:"not authorized"});
     } else {
       // your code here
       // HINT: req.session을 사용하세요.
+      req.session.save(function(err){
+        req.session.userId=userInfo.userId;
+        res.status(200).send({data:userInfo, message:"ok"}) 
+      })
     }
   }
 }
